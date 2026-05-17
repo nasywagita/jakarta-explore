@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-
 import 'core/theme/app_colors.dart';
 import 'core/theme/app_text_styles.dart';
 import 'providers/destinations_provider.dart';
@@ -43,29 +42,33 @@ class _WisataScreenState extends State<WisataScreen> {
                     builder: (context, constraints) {
                       if (constraints.maxWidth >= 600) {
                         // GridView untuk Tablet/Desktop
-                        int crossAxisCount = constraints.maxWidth >= 1000 ? 3 : 2;
+                        int crossAxisCount = constraints.maxWidth >= 1000
+                            ? 3
+                            : 2;
                         return GridView.builder(
                           padding: const EdgeInsets.fromLTRB(24, 8, 24, 80),
                           physics: const BouncingScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: crossAxisCount,
-                            crossAxisSpacing: 24,
-                            mainAxisSpacing: 24,
-                            childAspectRatio: 0.85,
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 24,
+                                mainAxisSpacing: 24,
+                                childAspectRatio: 0.85,
+                              ),
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             return _buildDestinationCard(context, items[index]);
                           },
                         );
                       }
-                      
+
                       // ListView untuk Mobile
                       return ListView.separated(
                         padding: const EdgeInsets.fromLTRB(24, 8, 24, 80),
                         physics: const BouncingScrollPhysics(),
                         itemCount: items.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: 24),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 24),
                         itemBuilder: (context, index) {
                           return _buildDestinationCard(context, items[index]);
                         },
@@ -80,7 +83,9 @@ class _WisataScreenState extends State<WisataScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final url = Uri.parse('https://www.google.com/maps/search/?api=1&query=Tempat+Wisata+Jakarta');
+          final url = Uri.parse(
+            'https://www.google.com/maps/search/?api=1&query=Tempat+Wisata+Jakarta',
+          );
           try {
             await launchUrl(url, mode: LaunchMode.externalApplication);
           } catch (e) {
@@ -114,15 +119,17 @@ class _WisataScreenState extends State<WisataScreen> {
     return Consumer<AuthProvider>(
       builder: (context, auth, child) {
         final name = auth.user?.name ?? 'Penjelajah';
-        final avatarUrl = auth.user?.profileImage ??
+        final avatarUrl =
+            auth.user?.profileImage ??
             'https://ui-avatars.com/api/?name=${Uri.encodeComponent(name)}&background=0D8ABC&color=fff';
 
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           decoration: const BoxDecoration(
             color: Colors.white,
-            border:
-                Border(bottom: BorderSide(color: Color(0xFFE2E8F0), width: 1)),
+            border: Border(
+              bottom: BorderSide(color: Color(0xFFE2E8F0), width: 1),
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,7 +164,10 @@ class _WisataScreenState extends State<WisataScreen> {
                   height: 40,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFFD7E2FF), width: 2),
+                    border: Border.all(
+                      color: const Color(0xFFD7E2FF),
+                      width: 2,
+                    ),
                   ),
                   child: ClipOval(
                     child: Image.network(
@@ -168,8 +178,9 @@ class _WisataScreenState extends State<WisataScreen> {
                         child: Center(
                           child: Text(
                             name[0].toUpperCase(),
-                            style: AppTextStyles.h6
-                                .copyWith(color: AppColors.primary),
+                            style: AppTextStyles.h6.copyWith(
+                              color: AppColors.primary,
+                            ),
                           ),
                         ),
                       ),
@@ -202,12 +213,17 @@ class _WisataScreenState extends State<WisataScreen> {
                 onTap: () => provider.setCategory(filter),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: isActive ? AppColors.primary : Colors.white,
                     borderRadius: BorderRadius.circular(9999),
                     border: Border.all(
-                      color: isActive ? AppColors.primary : const Color(0xFFC2C6D4),
+                      color: isActive
+                          ? AppColors.primary
+                          : const Color(0xFFC2C6D4),
                     ),
                   ),
                   alignment: Alignment.center,
@@ -327,7 +343,11 @@ class _WisataScreenState extends State<WisataScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Divider(color: Color(0xFFF8FAFC), height: 1, thickness: 1),
+                  const Divider(
+                    color: Color(0xFFF8FAFC),
+                    height: 1,
+                    thickness: 1,
+                  ),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -341,7 +361,9 @@ class _WisataScreenState extends State<WisataScreen> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            dest.location.split(',').first, // Showing just the first part for shorter string
+                            dest.location
+                                .split(',')
+                                .first, // Showing just the first part for shorter string
                             style: AppTextStyles.bodySmall.copyWith(
                               color: const Color(0xFF64748B),
                               fontWeight: FontWeight.w500,
